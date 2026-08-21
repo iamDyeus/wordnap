@@ -2,26 +2,20 @@
 
 > Kidnapping words from videos.
 
----
+You've probably seen it in movies; A shadowy figure sends a video spliced from news clips, with different faces delivering each word. Unsettling, precise, and painfully tedious to make by hand.
 
-You've seen it in movies. A shadowy figure sends a video — spliced together from news clips, one word at a time, different faces delivering each syllable. It's unsettling. It's precise. And doing it manually? That's hours of scrubbing through footage, finding timestamps, cutting frames.
+**Wordnap does it in seconds.**
 
-Wordnap does it in seconds.
+Feed it a library of videos. It transcribes and indexes every spoken word with millisecond precision. Type any sentence, and it builds a new video from the footage. Different speaker for each word, burned-in subtitles, and adjustable playback speed.
 
-Feed it a library of video files. It listens to every word spoken, indexes them with millisecond precision, and waits. When you type a sentence — any sentence — it assembles a new video, pulling each word from existing footage. One speaker per word if you want. Subtitles burned in. Speed adjusted so every syllable lands.
+It's a video editing engine that treats speech like a searchable database. Index once. Generate forever.
 
-It's a video editing engine that treats speech as a searchable database. Index once. Generate forever.
 
 
 ## How It Works
+<img width="1003" height="336" alt="image" src="https://github.com/user-attachments/assets/6771c525-05d2-45f1-809b-3864b19d06bf" />
 
 ```
-┌─────────────┐     ┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  Video      │     │  WhisperX   │     │   SQLite     │     │   FFmpeg    │
-│  Library    │────▶│  Transcribe │────▶│   Word DB    │────▶│   Render    │
-│  (.mp4s)    │     │  + Align    │     │  (indexed)   │     │   Output    │
-└─────────────┘     └─────────────┘     └──────────────┘     └─────────────┘
-
 1. INDEX: Scan videos → extract audio → transcribe → store word timestamps
 2. SEARCH: Tokenize sentence → find each word in the DB → rank candidates
 3. RENDER: Extract clips → concatenate → apply speed/subtitles → final MP4
@@ -29,14 +23,15 @@ It's a video editing engine that treats speech as a searchable database. Index o
 
 ## Features
 
-- 🎯 **Word-level precision** — WhisperX alignment gives exact timestamps for every spoken word
-- 🔄 **Round-robin mode** — Cycle words through different speakers for the ransom-note effect
-- 📝 **Burned-in subtitles** — Current word displayed on screen as it plays
-- 🐢 **Speed control** — Slow down output for clarity (0.5x - 2.0x)
-- 🧠 **Phrase matching** — Prefers natural 2-3 word sequences over individual words when available
-- 📖 **Dictionary export** — Export all available words for LLM script generation
-- ⚡ **Index once, generate forever** — Transcription is cached in SQLite, generation is instant
-- 🎭 **Best-effort mode** — Skips missing words instead of failing
+* **Word-level timestamps**: WhisperX aligns the transcript down to individual words.
+* **Round-robin mode**: Assign words to different speakers in sequence for a ransom-note style effect.
+* **Burned-in subtitles**: The current word appears on screen as it is spoken.
+* **Speed control**: Adjust playback speed from 0.5× to 2×.
+* **Phrase matching**: Uses natural 2–3 word phrases when possible instead of stitching together isolated words.
+* **Dictionary export**: Export all available words for use in LLM-generated scripts.
+* **Transcribe once, generate as much as you want**: Transcripts are cached in SQLite, so you don't need to reprocess the source every time.
+* **Best-effort mode**: Missing words are skipped instead of stopping the entire generation process.
+
 
 ## Requirements
 
@@ -231,51 +226,8 @@ wordnap/
 ```
 
 ### Pipeline Flow
+<img width="1024" height="572" alt="image-clean" src="https://github.com/user-attachments/assets/9d63011c-edac-416c-8407-6a88d74ac894" />
 
-```
-USER INPUT: "We need to be different"
-         │
-         ▼
-┌─── TOKENIZER ───┐
-│ ["we", "need",   │
-│  "to", "be",     │
-│  "different"]    │
-└────────┬─────────┘
-         │
-         ▼
-┌─── PHRASE SEARCH ──┐     ┌─── WORD SEARCH ──┐
-│ "need to" found as │     │ "we" → 47 clips  │
-│ phrase in segment  │     │ "be" → 23 clips  │
-│                    │     │ "different" → 3   │
-└────────┬───────────┘     └────────┬──────────┘
-         │                          │
-         ▼                          ▼
-┌──────── RANKER ─────────────────────┐
-│ Score by: confidence (35%)           │
-│           duration (25%)             │
-│           boundary quality (20%)     │
-│           source diversity (20%)     │
-│                                      │
-│ Round-robin: trump→obama→bush→trump  │
-└────────────────┬─────────────────────┘
-                 │
-                 ▼
-┌──────── EDL MANIFEST ───────────┐
-│ { clips: [...], gaps: [...] }    │
-│ JSON file for reproducibility    │
-└────────────────┬─────────────────┘
-                 │
-                 ▼
-┌──────── RENDERER ───────────────┐
-│ 1. Extract each clip (FFmpeg)    │
-│ 2. Add subtitles (drawtext)      │
-│ 3. Concatenate (re-encode)       │
-│ 4. Apply speed (post-process)    │
-└────────────────┬─────────────────┘
-                 │
-                 ▼
-            output.mp4
-```
 
 ### Database Schema
 
@@ -368,7 +320,7 @@ When a word has multiple candidates (e.g., "the" appears 200 times across all vi
 - Quality depends on source clarity — mumbled speech produces bad clips
 - Short function words ("a", "the", "is") can sound clipped
 - Very long sentences may have some missing words depending on vocabulary
-- Speed < 0.8x starts sounding unnatural
+- Speed < 0.69x starts sounding unnatural
 
 ## Origin Story
 
