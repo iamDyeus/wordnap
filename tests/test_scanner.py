@@ -7,8 +7,8 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from sentence_mixer.ingestion.scanner import Scanner
-from sentence_mixer.models.schemas import VideoMetadata, VideoStatus
+from wordnap.ingestion.scanner import Scanner
+from wordnap.models.schemas import VideoMetadata, VideoStatus
 
 
 # Sample ffprobe JSON output for a valid video file
@@ -225,7 +225,7 @@ class TestScanDirectory:
 class TestProbeVideo:
     """Tests for probe_video() with mocked subprocess calls."""
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_extracts_metadata_from_valid_video(self, mock_run: MagicMock):
         """probe_video extracts all metadata fields correctly."""
         mock_run.return_value = MagicMock(
@@ -245,7 +245,7 @@ class TestProbeVideo:
         assert result.audio_sample_rate == 44100
         assert result.status == VideoStatus.PENDING
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_parses_ntsc_frame_rate(self, mock_run: MagicMock):
         """probe_video correctly parses NTSC frame rates like 30000/1001."""
         mock_run.return_value = MagicMock(
@@ -261,7 +261,7 @@ class TestProbeVideo:
         assert result.width == 1280
         assert result.height == 720
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_uses_correct_ffprobe_command(self, mock_run: MagicMock):
         """probe_video calls ffprobe with correct arguments."""
         mock_run.return_value = MagicMock(
@@ -287,7 +287,7 @@ class TestProbeVideo:
             check=True,
         )
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_raises_on_ffprobe_failure(self, mock_run: MagicMock):
         """probe_video raises SubprocessError when ffprobe fails."""
         mock_run.side_effect = subprocess.CalledProcessError(
@@ -298,7 +298,7 @@ class TestProbeVideo:
         with pytest.raises(subprocess.CalledProcessError):
             scanner.probe_video(Path("/videos/corrupt.mp4"))
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_raises_on_missing_video_stream(self, mock_run: MagicMock):
         """probe_video raises ValueError when no video stream exists."""
         data = {
@@ -316,7 +316,7 @@ class TestProbeVideo:
         with pytest.raises(ValueError, match="No video stream"):
             scanner.probe_video(Path("/videos/audio_only.mp4"))
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_raises_on_missing_duration(self, mock_run: MagicMock):
         """probe_video raises ValueError when duration is missing."""
         data = {
@@ -339,7 +339,7 @@ class TestProbeVideo:
         with pytest.raises(ValueError, match="No duration"):
             scanner.probe_video(Path("/videos/no_duration.mp4"))
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_handles_video_without_audio_stream(self, mock_run: MagicMock):
         """probe_video handles video with no audio stream (sample_rate=0)."""
         data = {
@@ -366,7 +366,7 @@ class TestProbeVideo:
         assert result.height == 480
         assert result.fps == 24.0
 
-    @patch("sentence_mixer.ingestion.scanner.subprocess.run")
+    @patch("wordnap.ingestion.scanner.subprocess.run")
     def test_falls_back_to_avg_frame_rate(self, mock_run: MagicMock):
         """probe_video falls back to avg_frame_rate when r_frame_rate is 0/0."""
         data = {

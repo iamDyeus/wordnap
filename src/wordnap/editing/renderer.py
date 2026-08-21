@@ -6,7 +6,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from sentence_mixer.models.schemas import ClipEntry, EDLManifest, RenderConfig
+from wordnap.models.schemas import ClipEntry, EDLManifest, RenderConfig
 
 # Bundled font directory (project-relative, no system font dependency)
 _FONT_DIR = Path(__file__).resolve().parent.parent.parent.parent / "assets" / "fonts"
@@ -339,7 +339,7 @@ class Renderer:
         Raises:
             RenderError: If any FFmpeg operation fails.
         """
-        temp_dir = Path(tempfile.mkdtemp(prefix="sentence_mixer_render_"))
+        temp_dir = Path(tempfile.mkdtemp(prefix="wordnap_render_"))
 
         try:
             segments: list[Path] = []

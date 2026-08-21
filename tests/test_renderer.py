@@ -5,8 +5,8 @@ from unittest.mock import MagicMock, call, mock_open, patch
 
 import pytest
 
-from sentence_mixer.editing.renderer import Renderer, RenderError
-from sentence_mixer.models.schemas import (
+from wordnap.editing.renderer import Renderer, RenderError
+from wordnap.models.schemas import (
     ClipEntry,
     EDLManifest,
     GapEntry,
@@ -67,7 +67,7 @@ def sample_manifest(sample_clip_entry):
 class TestExtractClip:
     """Tests for Renderer.extract_clip()."""
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_success(self, mock_run, renderer):
         """extract_clip returns output_path on successful FFmpeg execution."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -82,7 +82,7 @@ class TestExtractClip:
         assert result == Path("/tmp/clip.mp4")
         mock_run.assert_called_once()
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_builds_correct_command(self, mock_run, renderer):
         """extract_clip constructs FFmpeg command with all normalized parameters."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -136,7 +136,7 @@ class TestExtractClip:
         assert "-af" not in cmd
         assert "setpts=" not in cmd[vf_idx + 1]
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_uses_list_args(self, mock_run, renderer):
         """extract_clip passes command as list (no shell=True)."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -155,7 +155,7 @@ class TestExtractClip:
         kwargs = mock_run.call_args[1]
         assert kwargs.get("shell", False) is False
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_raises_render_error_on_failure(self, mock_run, renderer):
         """extract_clip raises RenderError with stderr on FFmpeg failure."""
         mock_run.return_value = MagicMock(
@@ -172,7 +172,7 @@ class TestExtractClip:
 
         assert exc_info.value.stderr == "Error: codec not found"
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_with_custom_config(self, mock_run):
         """extract_clip uses custom config values in FFmpeg command."""
         config = RenderConfig(
@@ -205,7 +205,7 @@ class TestExtractClip:
         assert "libx265" in cmd
         assert "opus" in cmd
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_with_subtitle_adds_drawtext(self, mock_run, renderer):
         """extract_clip with subtitle_text adds drawtext to -vf filter."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -232,7 +232,7 @@ class TestExtractClip:
         assert "x=(w-tw)/2" in vf_value
         assert "y=h-th-40" in vf_value
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_without_subtitle_no_drawtext(self, mock_run, renderer):
         """extract_clip without subtitle_text has no drawtext in -vf filter."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -251,7 +251,7 @@ class TestExtractClip:
         assert vf_value == "scale=1920:1080"
         assert "drawtext" not in vf_value
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_subtitle_disabled_in_config(self, mock_run):
         """extract_clip with subtitles_enabled=False does not add drawtext even with subtitle_text."""
         config = RenderConfig(subtitles_enabled=False, playback_speed=1.0)
@@ -271,7 +271,7 @@ class TestExtractClip:
         vf_value = cmd[vf_idx + 1]
         assert "drawtext" not in vf_value
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_subtitle_special_char_escaping(self, mock_run, renderer):
         """extract_clip escapes special characters in subtitle text for FFmpeg drawtext."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -294,7 +294,7 @@ class TestExtractClip:
         # Original unescaped colon should not appear in the text value
         assert "a\\:test" in vf_value
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_with_speed_config_no_speed_filters(self, mock_run):
         """extract_clip does NOT apply speed filters even when playback_speed != 1.0.
         
@@ -321,7 +321,7 @@ class TestExtractClip:
         t_idx = cmd.index("-t")
         assert cmd[t_idx + 1] == "1.0"
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_speed_uses_raw_duration(self, mock_run):
         """extract_clip uses raw duration for -t even when speed != 1.0 (speed applied post-concat)."""
         config = RenderConfig(playback_speed=0.88)
@@ -346,7 +346,7 @@ class TestExtractClip:
         vf_idx = cmd.index("-vf")
         assert i_idx < t_idx < vf_idx, "-t should be an input option (after -i, before -vf)"
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_speed_1_uses_original_duration(self, mock_run):
         """extract_clip with speed=1.0 uses original duration for -t."""
         config = RenderConfig(playback_speed=1.0)
@@ -370,7 +370,7 @@ class TestExtractClip:
         vf_idx = cmd.index("-vf")
         assert i_idx < t_idx < vf_idx
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_extract_clip_speed_1_no_filters(self, mock_run, renderer):
         """extract_clip with speed=1.0 does not add speed filters."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -392,7 +392,7 @@ class TestExtractClip:
 class TestApplySpeed:
     """Tests for Renderer.apply_speed()."""
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_apply_speed_builds_correct_command(self, mock_run):
         """apply_speed constructs FFmpeg command with setpts and atempo filters."""
         config = RenderConfig(playback_speed=0.88)
@@ -433,7 +433,7 @@ class TestApplySpeed:
         assert "-y" in cmd
         assert str(Path("/tmp/output.mp4")) in cmd
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_apply_speed_returns_output_path(self, mock_run):
         """apply_speed returns the output path on success."""
         config = RenderConfig(playback_speed=0.9)
@@ -444,7 +444,7 @@ class TestApplySpeed:
 
         assert result == Path("/tmp/out.mp4")
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_apply_speed_raises_on_failure(self, mock_run):
         """apply_speed raises RenderError on FFmpeg failure."""
         config = RenderConfig(playback_speed=1.2)
@@ -457,7 +457,7 @@ class TestApplySpeed:
         assert "speed" in str(exc_info.value).lower()
         assert exc_info.value.stderr == "speed filter error"
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_apply_speed_fast_forward(self, mock_run):
         """apply_speed with speed > 1.0 uses correct filter values."""
         config = RenderConfig(playback_speed=1.5)
@@ -479,7 +479,7 @@ class TestApplySpeed:
 class TestGenerateSilence:
     """Tests for Renderer.generate_silence()."""
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_generate_silence_builds_correct_command(self, mock_run, renderer):
         """generate_silence builds FFmpeg command with black video and silent audio."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -508,7 +508,7 @@ class TestGenerateSilence:
         assert "yuv420p" in cmd
         assert "-y" in cmd
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_generate_silence_returns_output_path(self, mock_run, renderer):
         """generate_silence returns the output path on success."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -517,7 +517,7 @@ class TestGenerateSilence:
 
         assert result == Path("/tmp/silence.mp4")
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_generate_silence_raises_on_failure(self, mock_run, renderer):
         """generate_silence raises RenderError on FFmpeg failure."""
         mock_run.return_value = MagicMock(returncode=1, stderr="lavfi error")
@@ -528,7 +528,7 @@ class TestGenerateSilence:
         assert "silence" in str(exc_info.value)
         assert exc_info.value.stderr == "lavfi error"
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_generate_silence_mono_config(self, mock_run):
         """generate_silence uses mono when audio_channels=1."""
         config = RenderConfig(audio_channels=1, playback_speed=1.0)
@@ -544,7 +544,7 @@ class TestGenerateSilence:
 class TestConcatenate:
     """Tests for Renderer.concatenate()."""
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_concatenate_success(self, mock_run, renderer, tmp_path):
         """concatenate returns output_path on successful FFmpeg execution."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -560,7 +560,7 @@ class TestConcatenate:
         assert result == output
         mock_run.assert_called_once()
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_concatenate_builds_correct_command(self, mock_run, renderer, tmp_path):
         """concatenate uses FFmpeg concat demuxer with full re-encoding arguments."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -594,7 +594,7 @@ class TestConcatenate:
         assert "2" in cmd
         assert "-y" in cmd
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_concatenate_creates_concat_file(self, mock_run, renderer, tmp_path):
         """concatenate writes a concat file listing all clip paths."""
         clip1 = tmp_path / "clip1.mp4"
@@ -623,7 +623,7 @@ class TestConcatenate:
         assert f"file '{clip1}'" in concat_content[0]
         assert f"file '{clip2}'" in concat_content[0]
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_concatenate_cleans_up_concat_file(self, mock_run, renderer, tmp_path):
         """concatenate removes the temporary concat file after completion."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -637,7 +637,7 @@ class TestConcatenate:
         concat_file = tmp_path / "output_concat.txt"
         assert not concat_file.exists()
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_concatenate_cleans_up_on_failure(self, mock_run, renderer, tmp_path):
         """concatenate removes the concat file even when FFmpeg fails."""
         mock_run.return_value = MagicMock(returncode=1, stderr="concat error")
@@ -652,7 +652,7 @@ class TestConcatenate:
         concat_file = tmp_path / "output_concat.txt"
         assert not concat_file.exists()
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_concatenate_raises_render_error_on_failure(
         self, mock_run, renderer, tmp_path
     ):
@@ -668,7 +668,7 @@ class TestConcatenate:
 
         assert exc_info.value.stderr == "segfault in demuxer"
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_concatenate_uses_list_args(self, mock_run, renderer, tmp_path):
         """concatenate passes command as list (no shell injection)."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -686,7 +686,7 @@ class TestConcatenate:
 class TestRender:
     """Tests for Renderer.render()."""
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_success(self, mock_run, renderer, sample_manifest, tmp_path):
         """render returns output_path after successful extraction and concatenation."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -696,7 +696,7 @@ class TestRender:
 
         assert result == output
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_calls_extract_for_each_clip(
         self, mock_run, renderer, sample_manifest, tmp_path
     ):
@@ -709,7 +709,7 @@ class TestRender:
 
         assert mock_run.call_count == 3
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_with_gaps_no_silence_inserted(self, mock_run, tmp_path):
         """render with gaps does NOT insert silence segments (direct cuts only)."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")
@@ -764,7 +764,7 @@ class TestRender:
         # 3 clip extractions + 1 concatenation = 4 calls (NO silence)
         assert mock_run.call_count == 4
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_with_empty_gaps_backward_compat(
         self, mock_run, renderer, sample_manifest, tmp_path
     ):
@@ -779,7 +779,7 @@ class TestRender:
         # 2 clips + 1 concat = 3 calls (no silence)
         assert mock_run.call_count == 3
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_with_speed_applies_post_concat(self, mock_run, sample_manifest, tmp_path):
         """render with playback_speed != 1.0 applies speed as a post-concat pass."""
         config = RenderConfig(playback_speed=0.88, subtitles_enabled=False)
@@ -808,7 +808,7 @@ class TestRender:
             assert "setpts=" not in extract_cmd[vf_idx + 1]
             assert "-af" not in extract_cmd
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_cleans_up_temp_directory(
         self, mock_run, renderer, sample_manifest, tmp_path
     ):
@@ -827,14 +827,14 @@ class TestRender:
             created_temps.append(d)
             return d
 
-        with patch("sentence_mixer.editing.renderer.tempfile.mkdtemp", side_effect=track_mkdtemp):
+        with patch("wordnap.editing.renderer.tempfile.mkdtemp", side_effect=track_mkdtemp):
             renderer.render(sample_manifest, output)
 
         # Temp dir should be removed
         for temp_dir in created_temps:
             assert not Path(temp_dir).exists()
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_cleans_up_on_extract_failure(
         self, mock_run, renderer, sample_manifest, tmp_path
     ):
@@ -853,7 +853,7 @@ class TestRender:
             created_temps.append(d)
             return d
 
-        with patch("sentence_mixer.editing.renderer.tempfile.mkdtemp", side_effect=track_mkdtemp):
+        with patch("wordnap.editing.renderer.tempfile.mkdtemp", side_effect=track_mkdtemp):
             with pytest.raises(RenderError):
                 renderer.render(sample_manifest, output)
 
@@ -861,7 +861,7 @@ class TestRender:
         for temp_dir in created_temps:
             assert not Path(temp_dir).exists()
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_raises_render_error_with_clip_entry(
         self, mock_run, renderer, sample_manifest, tmp_path
     ):
@@ -877,7 +877,7 @@ class TestRender:
         assert exc_info.value.clip_entry.word == "hello"
         assert exc_info.value.stderr == "bad clip"
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_uses_padded_times(
         self, mock_run, renderer, sample_manifest, tmp_path
     ):
@@ -898,7 +898,7 @@ class TestRender:
         assert "-t" in first_call_cmd
         assert "-to" not in first_call_cmd
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_creates_output_directory(
         self, mock_run, renderer, sample_manifest, tmp_path
     ):
@@ -910,7 +910,7 @@ class TestRender:
 
         assert output.parent.exists()
 
-    @patch("sentence_mixer.editing.renderer.subprocess.run")
+    @patch("wordnap.editing.renderer.subprocess.run")
     def test_render_passes_subtitle_text_when_enabled(self, mock_run, tmp_path):
         """render passes word as subtitle_text when subtitles are enabled."""
         mock_run.return_value = MagicMock(returncode=0, stderr="")

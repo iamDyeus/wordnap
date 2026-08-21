@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from sentence_mixer.database.database import Database
-from sentence_mixer.models.schemas import Segment, VideoMetadata, VideoStatus, Word
-from sentence_mixer.search.candidate import SearchEngine, WordNotFoundError
+from wordnap.database.database import Database
+from wordnap.models.schemas import Segment, VideoMetadata, VideoStatus, Word
+from wordnap.search.candidate import SearchEngine, WordNotFoundError
 
 
 def _create_test_db() -> Database:

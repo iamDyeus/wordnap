@@ -2,15 +2,15 @@
 
 from pathlib import Path
 
-from sentence_mixer.database.database import Database
-from sentence_mixer.database.queries import (
+from wordnap.database.database import Database
+from wordnap.database.queries import (
     find_consecutive_words_in_segment,
     find_words_batch,
     find_words_by_normalized,
     find_words_with_segment_context,
     is_indexed,
 )
-from sentence_mixer.models.schemas import Segment, VideoMetadata, VideoStatus, Word
+from wordnap.models.schemas import Segment, VideoMetadata, VideoStatus, Word
 
 
 def _create_test_db() -> Database:

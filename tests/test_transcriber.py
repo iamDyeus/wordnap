@@ -5,8 +5,8 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from sentence_mixer.models.schemas import TranscriptionResult
-from sentence_mixer.transcription.whisperx import Transcriber
+from wordnap.models.schemas import TranscriptionResult
+from wordnap.transcription.whisperx import Transcriber
 
 
 @pytest.fixture
@@ -44,7 +44,7 @@ class TestTranscriberTranscribe:
         with pytest.raises(FileNotFoundError, match="Audio file not found"):
             transcriber.transcribe(Path("/nonexistent/audio.wav"))
 
-    @patch("sentence_mixer.transcription.whisperx.whisperx", create=True)
+    @patch("wordnap.transcription.whisperx.whisperx", create=True)
     def test_successful_transcription(self, mock_wx, tmp_path):
         """transcribe() returns TranscriptionResult with correct mapping."""
         # Create a fake audio file

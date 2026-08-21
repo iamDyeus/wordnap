@@ -11,9 +11,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 from typer.testing import CliRunner
 
-from sentence_mixer.cli import app
-from sentence_mixer.database.database import Database
-from sentence_mixer.models.schemas import (
+from wordnap.cli import app
+from wordnap.database.database import Database
+from wordnap.models.schemas import (
     Segment,
     TranscriptionResult,
     VideoMetadata,
@@ -132,13 +132,13 @@ class TestIndexPipelineEndToEnd:
 
         with (
             patch(
-                "sentence_mixer.cli.Scanner"
+                "wordnap.cli.Scanner"
             ) as MockScanner,
             patch(
-                "sentence_mixer.cli.AudioExtractor"
+                "wordnap.cli.AudioExtractor"
             ) as MockAudioExtractor,
             patch(
-                "sentence_mixer.cli.Transcriber"
+                "wordnap.cli.Transcriber"
             ) as MockTranscriber,
         ):
             # Set up mocks
@@ -193,9 +193,9 @@ class TestIndexPipelineEndToEnd:
         transcription = _make_transcription_result()
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results
@@ -257,9 +257,9 @@ class TestIndexPipelineEndToEnd:
 
         # First run - indexes the video
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results
@@ -279,9 +279,9 @@ class TestIndexPipelineEndToEnd:
 
         # Second run - scanner should receive the indexed path in its init
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             # Scanner returns empty (simulating already-indexed filtering)
             scanner_instance = MockScanner.return_value
@@ -309,9 +309,9 @@ class TestIndexPipelineEndToEnd:
         transcription = _make_transcription_result()
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results
@@ -362,9 +362,9 @@ class TestIndexPipelineEndToEnd:
         mock_scan_results = [_make_video_metadata(broken_path)]
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results
@@ -397,9 +397,9 @@ class TestIndexPipelineEndToEnd:
         db_path = tmp_path / "test.db"
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor"),
-            patch("sentence_mixer.cli.Transcriber"),
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor"),
+            patch("wordnap.cli.Transcriber"),
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = []
@@ -421,9 +421,9 @@ class TestIndexPipelineEndToEnd:
         transcription = _make_transcription_result()
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results
@@ -499,9 +499,9 @@ class TestIndexPipelineEndToEnd:
         transcription = TranscriptionResult(segments=segments, words=words)
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results
@@ -547,9 +547,9 @@ class TestIndexPipelineEndToEnd:
         transcription = _make_transcription_result()
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results
@@ -583,9 +583,9 @@ class TestIndexPipelineEndToEnd:
         transcription = _make_transcription_result()
 
         with (
-            patch("sentence_mixer.cli.Scanner") as MockScanner,
-            patch("sentence_mixer.cli.AudioExtractor") as MockAudioExtractor,
-            patch("sentence_mixer.cli.Transcriber") as MockTranscriber,
+            patch("wordnap.cli.Scanner") as MockScanner,
+            patch("wordnap.cli.AudioExtractor") as MockAudioExtractor,
+            patch("wordnap.cli.Transcriber") as MockTranscriber,
         ):
             scanner_instance = MockScanner.return_value
             scanner_instance.scan_directory.return_value = mock_scan_results

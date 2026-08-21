@@ -4,7 +4,7 @@ import unicodedata
 
 import pytest
 
-from sentence_mixer.search.tokenizer import Tokenizer
+from wordnap.search.tokenizer import Tokenizer
 
 
 @pytest.fixture

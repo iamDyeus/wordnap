@@ -6,7 +6,7 @@ import subprocess
 
 import pytest
 
-from sentence_mixer.ingestion.audio import AudioExtractor, AudioExtractionError
+from wordnap.ingestion.audio import AudioExtractor, AudioExtractionError
 
 
 class TestAudioExtractorCaching:
@@ -24,7 +24,7 @@ class TestAudioExtractorCaching:
         cached_wav = output_dir / "video.wav"
         cached_wav.write_text("existing audio data")
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run") as mock_run:
+        with patch("wordnap.ingestion.audio.subprocess.run") as mock_run:
             result = extractor.extract_audio(video_path, output_dir)
 
         # subprocess.run should never be called
@@ -41,7 +41,7 @@ class TestAudioExtractorCaching:
         mock_result = MagicMock()
         mock_result.returncode = 0
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run", return_value=mock_result):
+        with patch("wordnap.ingestion.audio.subprocess.run", return_value=mock_result):
             extractor.extract_audio(video_path, output_dir)
 
         assert output_dir.exists()
@@ -56,7 +56,7 @@ class TestAudioExtractorCaching:
         mock_result = MagicMock()
         mock_result.returncode = 0
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run", return_value=mock_result):
+        with patch("wordnap.ingestion.audio.subprocess.run", return_value=mock_result):
             result = extractor.extract_audio(video_path, output_dir)
 
         assert result == output_dir / "my_video_file.wav"
@@ -75,7 +75,7 @@ class TestAudioExtractorFFmpeg:
         mock_result = MagicMock()
         mock_result.returncode = 0
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run", return_value=mock_result) as mock_run:
+        with patch("wordnap.ingestion.audio.subprocess.run", return_value=mock_result) as mock_run:
             extractor.extract_audio(video_path, output_dir)
 
         expected_output = output_dir / "test.wav"
@@ -108,7 +108,7 @@ class TestAudioExtractorFFmpeg:
         mock_result = MagicMock()
         mock_result.returncode = 0
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run", return_value=mock_result) as mock_run:
+        with patch("wordnap.ingestion.audio.subprocess.run", return_value=mock_result) as mock_run:
             extractor.extract_audio(video_path, output_dir, sample_rate=44100)
 
         call_args = mock_run.call_args[0][0]
@@ -126,7 +126,7 @@ class TestAudioExtractorFFmpeg:
         mock_result.returncode = 1
         mock_result.stderr = "No such file or directory: codec not found"
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run", return_value=mock_result):
+        with patch("wordnap.ingestion.audio.subprocess.run", return_value=mock_result):
             with pytest.raises(AudioExtractionError) as exc_info:
                 extractor.extract_audio(video_path, output_dir)
 
@@ -153,7 +153,7 @@ class TestAudioExtractorFFmpeg:
             partial_output.write_text("partial data")
             return mock_result
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run", side_effect=fake_ffmpeg_run):
+        with patch("wordnap.ingestion.audio.subprocess.run", side_effect=fake_ffmpeg_run):
             with pytest.raises(AudioExtractionError):
                 extractor.extract_audio(video_path, output_dir)
 
@@ -169,7 +169,7 @@ class TestAudioExtractorFFmpeg:
         mock_result = MagicMock()
         mock_result.returncode = 0
 
-        with patch("sentence_mixer.ingestion.audio.subprocess.run", return_value=mock_result) as mock_run:
+        with patch("wordnap.ingestion.audio.subprocess.run", return_value=mock_result) as mock_run:
             extractor.extract_audio(video_path, output_dir)
 
         # Verify shell=True was NOT passed

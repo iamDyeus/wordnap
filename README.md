@@ -90,7 +90,7 @@ Good source material: speeches, interviews, podcasts, lectures — anything with
 ### 2. Index your library
 
 ```bash
-python -m sentence_mixer.cli index ./library
+python -m wordnap.cli index ./library
 ```
 
 This runs WhisperX on each video and stores every word with its timestamp. Takes ~2 min per 10-min video with GPU.
@@ -110,10 +110,10 @@ Indexed 3 videos, stored 6123 words
 
 ```bash
 # Export all available words
-python -m sentence_mixer.cli words --output data/dictionary.txt
+python -m wordnap.cli words --output data/dictionary.txt
 
 # See most common words with counts
-python -m sentence_mixer.cli words --counts --sort-by count
+python -m wordnap.cli words --counts --sort-by count
 ```
 
 **Pro tip:** Feed `data/dictionary.txt` to ChatGPT/Claude with the prompt:
@@ -123,7 +123,7 @@ python -m sentence_mixer.cli words --counts --sort-by count
 ### 4. Generate a video
 
 ```bash
-python -m sentence_mixer.cli generate \
+python -m wordnap.cli generate \
   --sentence "We are holding your attention hostage. Just a joke. Have a great day." \
   --round-robin \
   --subtitles \
@@ -143,12 +143,12 @@ Generated 1 variation(s):
 ### `index` — Transcribe and index videos
 
 ```bash
-python -m sentence_mixer.cli index ./library [OPTIONS]
+python -m wordnap.cli index ./library [OPTIONS]
 ```
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `--db-path` | `data/sentence_mixer.db` | Database file location |
+| `--db-path` | `data/wordnap.db` | Database file location |
 
 Indexing is **idempotent** — re-running skips already-indexed files.
 
@@ -157,7 +157,7 @@ Indexing is **idempotent** — re-running skips already-indexed files.
 ### `generate` — Create sentence videos
 
 ```bash
-python -m sentence_mixer.cli generate --sentence "..." [OPTIONS]
+python -m wordnap.cli generate --sentence "..." [OPTIONS]
 ```
 
 | Option | Default | Description |
@@ -172,14 +172,14 @@ python -m sentence_mixer.cli generate --sentence "..." [OPTIONS]
 | `--gap` | `80.0` | Default silence gap between words (ms) |
 | `--strict` / `--no-strict` | `off` | Fail on missing words vs skip them |
 | `--output-dir` | `output` | Where to save generated videos |
-| `--db-path` | `data/sentence_mixer.db` | Database file location |
+| `--db-path` | `data/wordnap.db` | Database file location |
 
 ---
 
 ### `words` — Export available vocabulary
 
 ```bash
-python -m sentence_mixer.cli words [OPTIONS]
+python -m wordnap.cli words [OPTIONS]
 ```
 
 | Option | Default | Description |
@@ -195,7 +195,7 @@ python -m sentence_mixer.cli words [OPTIONS]
 
 ```
 wordnap/
-├── src/sentence_mixer/
+├── src/wordnap/
 │   ├── cli.py                  # Typer CLI — index, generate, words commands
 │   ├── ingestion/
 │   │   ├── scanner.py          # Recursive video discovery + ffprobe metadata
@@ -220,7 +220,7 @@ wordnap/
 │       └── schemas.py          # Pydantic models (20+ data types)
 ├── library/                    # ← Put your videos here
 ├── data/
-│   ├── sentence_mixer.db       # SQLite database (auto-created)
+│   ├── wordnap.db       # SQLite database (auto-created)
 │   ├── audio/                  # Cached extracted WAV files
 │   └── dictionary.txt          # Exported word list
 ├── output/                     # ← Generated videos appear here
@@ -291,23 +291,23 @@ Key index: `normalized_word` — enables instant word lookup across all videos.
 
 ```bash
 # Simple generation
-python -m sentence_mixer.cli generate --sentence "I do not like this" --variations 1
+python -m wordnap.cli generate --sentence "I do not like this" --variations 1
 
 # Multi-speaker ransom note
-python -m sentence_mixer.cli generate \
+python -m wordnap.cli generate \
   --sentence "We know what you did. You cannot hide." \
   --round-robin --speed 0.85 --variations 3
 
 # Fast, no subtitles
-python -m sentence_mixer.cli generate \
+python -m wordnap.cli generate \
   --sentence "The world is changing" \
   --no-subtitles --speed 1.0
 
 # Strict mode (fail if any word missing)
-python -m sentence_mixer.cli generate --sentence "hello world" --strict
+python -m wordnap.cli generate --sentence "hello world" --strict
 
 # Very slow for dramatic effect
-python -m sentence_mixer.cli generate \
+python -m wordnap.cli generate \
   --sentence "We. Are. Watching. You." \
   --speed 0.7 --round-robin
 ```
@@ -327,8 +327,8 @@ python -m sentence_mixer.cli generate \
 # Clear all indexed data
 python -c "
 from pathlib import Path
-from sentence_mixer.database.database import Database
-db = Database(Path('data/sentence_mixer.db'))
+from wordnap.database.database import Database
+db = Database(Path('data/wordnap.db'))
 db.initialize()
 conn = db.connection
 conn.execute('DELETE FROM words')
@@ -340,7 +340,7 @@ print('Database cleared.')
 "
 
 # Or just delete the file
-rm data/sentence_mixer.db
+rm data/wordnap.db
 ```
 
 ## Running Tests

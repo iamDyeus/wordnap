@@ -2,12 +2,12 @@
 
 import logging
 
-from sentence_mixer.database.database import Database
-from sentence_mixer.database.queries import (
+from wordnap.database.database import Database
+from wordnap.database.queries import (
     find_consecutive_words_in_segment,
     find_words_with_segment_context,
 )
-from sentence_mixer.models.schemas import PhraseCandidate, Segment, Word
+from wordnap.models.schemas import PhraseCandidate, Segment, Word
 
 logger = logging.getLogger(__name__)
 

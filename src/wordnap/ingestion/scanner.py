@@ -5,7 +5,7 @@ import logging
 import subprocess
 from pathlib import Path
 
-from sentence_mixer.models.schemas import VideoMetadata, VideoStatus
+from wordnap.models.schemas import VideoMetadata, VideoStatus
 
 logger = logging.getLogger(__name__)
 

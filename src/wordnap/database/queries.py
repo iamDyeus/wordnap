@@ -6,8 +6,8 @@ for use by the search engine and generation pipeline.
 
 from pathlib import Path
 
-from sentence_mixer.database.database import Database
-from sentence_mixer.models.schemas import VideoMetadata, Word, WordCandidate
+from wordnap.database.database import Database
+from wordnap.models.schemas import VideoMetadata, Word, WordCandidate
 
 
 def find_words_by_normalized(

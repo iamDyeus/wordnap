@@ -1,8 +1,8 @@
 """Candidate search engine for finding word clips in the database."""
 
-from sentence_mixer.database.database import Database
-from sentence_mixer.database.queries import find_words_batch, find_words_by_normalized
-from sentence_mixer.models.schemas import WordCandidate
+from wordnap.database.database import Database
+from wordnap.database.queries import find_words_batch, find_words_by_normalized
+from wordnap.models.schemas import WordCandidate
 
 
 class WordNotFoundError(Exception):

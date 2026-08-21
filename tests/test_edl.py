@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from sentence_mixer.editing.edl import EDLGenerator
-from sentence_mixer.models.schemas import (
+from wordnap.editing.edl import EDLGenerator
+from wordnap.models.schemas import (
     GapEntry,
     PhraseCandidate,
     Segment,

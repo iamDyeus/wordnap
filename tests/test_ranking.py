@@ -4,14 +4,14 @@ from pathlib import Path
 
 import pytest
 
-from sentence_mixer.models.schemas import (
+from wordnap.models.schemas import (
     RankingConfig,
     VideoMetadata,
     VideoStatus,
     Word,
     WordCandidate,
 )
-from sentence_mixer.search.ranking import Ranker
+from wordnap.search.ranking import Ranker
 
 
 def _make_video(video_id: int = 1, path: str = "/videos/test.mp4") -> VideoMetadata:

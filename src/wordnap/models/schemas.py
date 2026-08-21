@@ -1,4 +1,4 @@
-"""Pydantic data models for Sentence Mixer."""
+"""Pydantic data models for Wordnap."""
 
 from __future__ import annotations
 

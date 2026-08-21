@@ -15,9 +15,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 from typer.testing import CliRunner
 
-from sentence_mixer.cli import app
-from sentence_mixer.database.database import Database
-from sentence_mixer.models.schemas import (
+from wordnap.cli import app
+from wordnap.database.database import Database
+from wordnap.models.schemas import (
     Segment,
     VideoMetadata,
     VideoStatus,

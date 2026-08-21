@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from sentence_mixer.models.schemas import (
+from wordnap.models.schemas import (
     ClipEntry,
     EDLManifest,
     GapEntry,

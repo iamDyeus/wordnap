@@ -3,8 +3,8 @@
 import logging
 from pathlib import Path
 
-from sentence_mixer.models.schemas import Segment, TranscriptionResult, Word
-from sentence_mixer.search.tokenizer import Tokenizer
+from wordnap.models.schemas import Segment, TranscriptionResult, Word
+from wordnap.search.tokenizer import Tokenizer
 
 logger = logging.getLogger(__name__)
 

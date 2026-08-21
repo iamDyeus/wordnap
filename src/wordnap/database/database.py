@@ -3,7 +3,7 @@
 import sqlite3
 from pathlib import Path
 
-from sentence_mixer.models.schemas import Segment, VideoMetadata, VideoStatus, Word
+from wordnap.models.schemas import Segment, VideoMetadata, VideoStatus, Word
 
 
 class Database:

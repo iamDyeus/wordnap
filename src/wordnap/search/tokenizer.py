@@ -2,7 +2,7 @@
 
 import unicodedata
 
-from sentence_mixer.models.schemas import TokenInfo
+from wordnap.models.schemas import TokenInfo
 
 
 class Tokenizer:

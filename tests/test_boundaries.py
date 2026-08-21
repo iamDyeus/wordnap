@@ -2,7 +2,7 @@
 
 import pytest
 
-from sentence_mixer.editing.boundaries import (
+from wordnap.editing.boundaries import (
     compute_clip_duration,
     compute_padded_boundaries,
     format_timestamp,

@@ -1,4 +1,4 @@
-"""CLI interface for Sentence Mixer."""
+"""CLI interface for Wordnap."""
 
 import logging
 import sys
@@ -7,30 +7,30 @@ from pathlib import Path
 
 import typer
 
-from sentence_mixer.database.database import Database
-from sentence_mixer.editing.edl import EDLGenerator
-from sentence_mixer.editing.renderer import RenderError, Renderer
-from sentence_mixer.ingestion.audio import AudioExtractor
-from sentence_mixer.ingestion.scanner import Scanner
-from sentence_mixer.models.schemas import RankingConfig, RenderConfig, VideoStatus
-from sentence_mixer.search.candidate import SearchEngine, WordNotFoundError
-from sentence_mixer.search.phrase_search import PhraseSearchEngine
-from sentence_mixer.search.ranking import Ranker
-from sentence_mixer.search.tokenizer import Tokenizer
-from sentence_mixer.transcription.whisperx import Transcriber
+from wordnap.database.database import Database
+from wordnap.editing.edl import EDLGenerator
+from wordnap.editing.renderer import RenderError, Renderer
+from wordnap.ingestion.audio import AudioExtractor
+from wordnap.ingestion.scanner import Scanner
+from wordnap.models.schemas import RankingConfig, RenderConfig, VideoStatus
+from wordnap.search.candidate import SearchEngine, WordNotFoundError
+from wordnap.search.phrase_search import PhraseSearchEngine
+from wordnap.search.ranking import Ranker
+from wordnap.search.tokenizer import Tokenizer
+from wordnap.transcription.whisperx import Transcriber
 
 logger = logging.getLogger(__name__)
 
 app = typer.Typer(
-    name="sentence-mixer",
-    help="Sentence Mixer - Construct sentences from video libraries",
+    name="wordnap",
+    help="Wordnap - Construct sentences from video libraries",
 )
 
 
 @app.command()
 def index(
     directory: Path = typer.Argument(..., help="Directory containing video files"),
-    db_path: Path = typer.Option("data/sentence_mixer.db", help="Database path"),
+    db_path: Path = typer.Option("data/wordnap.db", help="Database path"),
 ) -> None:
     """Index a directory of video files for word-level search."""
     # Initialize database
@@ -108,7 +108,7 @@ def index(
 def generate(
     sentence: str = typer.Option(..., "--sentence", help="Sentence to generate"),
     variations: int = typer.Option(5, "--variations", help="Number of variations"),
-    db_path: Path = typer.Option("data/sentence_mixer.db", help="Database path"),
+    db_path: Path = typer.Option("data/wordnap.db", help="Database path"),
     output_dir: Path = typer.Option("output", help="Output directory"),
     padding: float = typer.Option(0.05, "--padding", help="Clip padding in seconds"),
     # V1.5 new options
@@ -503,7 +503,7 @@ def _slugify(text: str, max_length: int = 80) -> str:
 
 @app.command()
 def words(
-    db_path: Path = typer.Option("data/sentence_mixer.db", help="Database path"),
+    db_path: Path = typer.Option("data/wordnap.db", help="Database path"),
     output: Path = typer.Option(None, "--output", "-o", help="Output file path (prints to stdout if not set)"),
     min_count: int = typer.Option(1, "--min-count", help="Minimum occurrence count to include"),
     show_counts: bool = typer.Option(False, "--counts/--no-counts", help="Show occurrence counts"),

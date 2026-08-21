@@ -2,7 +2,7 @@
 
 from itertools import product
 
-from sentence_mixer.models.schemas import RankingConfig, WordCandidate
+from wordnap.models.schemas import RankingConfig, WordCandidate
 
 
 class Ranker:

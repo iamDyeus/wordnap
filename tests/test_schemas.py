@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from sentence_mixer.models.schemas import (
+from wordnap.models.schemas import (
     ClipEntry,
     EDLManifest,
     RankingConfig,

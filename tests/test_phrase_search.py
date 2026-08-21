@@ -2,9 +2,9 @@
 
 from pathlib import Path
 
-from sentence_mixer.database.database import Database
-from sentence_mixer.models.schemas import Segment, VideoMetadata, VideoStatus, Word
-from sentence_mixer.search.phrase_search import PhraseSearchEngine
+from wordnap.database.database import Database
+from wordnap.models.schemas import Segment, VideoMetadata, VideoStatus, Word
+from wordnap.search.phrase_search import PhraseSearchEngine
 
 
 def _create_test_db() -> Database:

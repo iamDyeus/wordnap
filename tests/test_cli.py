@@ -6,9 +6,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 from typer.testing import CliRunner
 
-from sentence_mixer.cli import _slugify, app
-from sentence_mixer.editing.renderer import RenderError
-from sentence_mixer.models.schemas import (
+from wordnap.cli import _slugify, app
+from wordnap.editing.renderer import RenderError
+from wordnap.models.schemas import (
     ClipEntry,
     EDLManifest,
     RankingConfig,
@@ -17,7 +17,7 @@ from sentence_mixer.models.schemas import (
     Word,
     WordCandidate,
 )
-from sentence_mixer.search.candidate import WordNotFoundError
+from wordnap.search.candidate import WordNotFoundError
 
 runner = CliRunner()
 
@@ -48,10 +48,10 @@ class TestSlugify:
 class TestIndexCommand:
     """Tests for the index CLI command."""
 
-    @patch("sentence_mixer.cli.Transcriber")
-    @patch("sentence_mixer.cli.AudioExtractor")
-    @patch("sentence_mixer.cli.Scanner")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Transcriber")
+    @patch("wordnap.cli.AudioExtractor")
+    @patch("wordnap.cli.Scanner")
+    @patch("wordnap.cli.Database")
     def test_index_no_new_videos(
         self, mock_db_cls, mock_scanner_cls, mock_audio_cls, mock_transcriber_cls
     ):
@@ -69,10 +69,10 @@ class TestIndexCommand:
         assert result.exit_code == 0
         assert "No new video files found" in result.output
 
-    @patch("sentence_mixer.cli.Transcriber")
-    @patch("sentence_mixer.cli.AudioExtractor")
-    @patch("sentence_mixer.cli.Scanner")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Transcriber")
+    @patch("wordnap.cli.AudioExtractor")
+    @patch("wordnap.cli.Scanner")
+    @patch("wordnap.cli.Database")
     def test_index_success_summary(
         self, mock_db_cls, mock_scanner_cls, mock_audio_cls, mock_transcriber_cls
     ):
@@ -102,7 +102,7 @@ class TestIndexCommand:
         mock_audio.extract_audio.return_value = Path("/data/audio/test.wav")
 
         # Transcriber returns a result with words
-        from sentence_mixer.models.schemas import Segment, TranscriptionResult
+        from wordnap.models.schemas import Segment, TranscriptionResult
 
         mock_transcriber = MagicMock()
         mock_transcriber_cls.return_value = mock_transcriber
@@ -143,10 +143,10 @@ class TestIndexCommand:
         assert result.exit_code == 0
         assert "Indexed 1 videos, stored 2 words" in result.output
 
-    @patch("sentence_mixer.cli.Transcriber")
-    @patch("sentence_mixer.cli.AudioExtractor")
-    @patch("sentence_mixer.cli.Scanner")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Transcriber")
+    @patch("wordnap.cli.AudioExtractor")
+    @patch("wordnap.cli.Scanner")
+    @patch("wordnap.cli.Database")
     def test_index_handles_transcription_failure(
         self, mock_db_cls, mock_scanner_cls, mock_audio_cls, mock_transcriber_cls
     ):
@@ -189,12 +189,12 @@ class TestIndexCommand:
 class TestGenerateCommand:
     """Tests for the generate CLI command."""
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_missing_words_strict_error(
         self,
         mock_db_cls,
@@ -225,12 +225,12 @@ class TestGenerateCommand:
         assert result.exit_code == 1
         assert "Words not found: xyzzy, quux" in result.output
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_empty_sentence_error(
         self,
         mock_db_cls,
@@ -249,12 +249,12 @@ class TestGenerateCommand:
         assert result.exit_code == 1
         assert "no valid tokens" in result.output
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_success_displays_paths(
         self,
         mock_db_cls,
@@ -346,12 +346,12 @@ class TestGenerateCommand:
         assert result.exit_code == 0
         assert "Generated 1 variation(s)" in result.output
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_partial_render_failure(
         self,
         mock_db_cls,
@@ -443,12 +443,12 @@ class TestGenerateCommand:
         assert result.exit_code == 0
         assert "Generated 1 variation(s)" in result.output
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_all_renders_fail_exits_1(
         self,
         mock_db_cls,
@@ -538,12 +538,12 @@ class TestGenerateCommand:
         assert result.exit_code == 1
         assert "All variations failed to render" in result.output
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_best_effort_skips_missing_words(
         self,
         mock_db_cls,
@@ -638,12 +638,12 @@ class TestGenerateCommand:
         assert "Skipping words not found in library: xyzzy" in result.output
         assert "Generated 1 variation(s)" in result.output
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_gap_flag_passed_to_edl(
         self,
         mock_db_cls,
@@ -740,12 +740,12 @@ class TestGenerateCommand:
             punctuation_pause_enabled=True,
         )
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_no_subtitles_flag(
         self,
         mock_db_cls,
@@ -838,12 +838,12 @@ class TestGenerateCommand:
         render_config = mock_renderer_cls.call_args[0][0]
         assert render_config.subtitles_enabled is False
 
-    @patch("sentence_mixer.cli.PhraseSearchEngine")
-    @patch("sentence_mixer.cli.Renderer")
-    @patch("sentence_mixer.cli.EDLGenerator")
-    @patch("sentence_mixer.cli.Ranker")
-    @patch("sentence_mixer.cli.SearchEngine")
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.PhraseSearchEngine")
+    @patch("wordnap.cli.Renderer")
+    @patch("wordnap.cli.EDLGenerator")
+    @patch("wordnap.cli.Ranker")
+    @patch("wordnap.cli.SearchEngine")
+    @patch("wordnap.cli.Database")
     def test_generate_no_punctuation_pause_flag(
         self,
         mock_db_cls,
@@ -943,7 +943,7 @@ class TestGenerateCommand:
 class TestWordsCommand:
     """Tests for the words CLI command."""
 
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Database")
     def test_words_empty_database_exits_1(self, mock_db_cls):
         """When no words are in the database, exit with code 1."""
         mock_db = MagicMock()
@@ -955,7 +955,7 @@ class TestWordsCommand:
         assert result.exit_code == 1
         assert "No words found" in result.output
 
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Database")
     def test_words_shows_words_alphabetically(self, mock_db_cls):
         """Words are displayed alphabetically by default."""
         mock_db = MagicMock()
@@ -981,7 +981,7 @@ class TestWordsCommand:
         cherry_pos = result.output.index("cherry")
         assert apple_pos < banana_pos < cherry_pos
 
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Database")
     def test_words_output_flag_writes_file(self, mock_db_cls, tmp_path):
         """The --output flag writes words to a file."""
         mock_db = MagicMock()
@@ -1003,7 +1003,7 @@ class TestWordsCommand:
         assert "world" in content
         assert "Exported 2 unique words" in result.output
 
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Database")
     def test_words_counts_flag_shows_occurrences(self, mock_db_cls):
         """The --counts flag includes occurrence counts."""
         mock_db = MagicMock()
@@ -1021,7 +1021,7 @@ class TestWordsCommand:
         assert "hello (5)" in result.output
         assert "world (3)" in result.output
 
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Database")
     def test_words_sort_by_count(self, mock_db_cls):
         """The --sort-by count option sorts by frequency descending."""
         mock_db = MagicMock()
@@ -1043,7 +1043,7 @@ class TestWordsCommand:
         cherry_pos = result.output.index("cherry")
         assert banana_pos < apple_pos < cherry_pos
 
-    @patch("sentence_mixer.cli.Database")
+    @patch("wordnap.cli.Database")
     def test_words_sort_by_length(self, mock_db_cls):
         """The --sort-by length option sorts by word length descending."""
         mock_db = MagicMock()
