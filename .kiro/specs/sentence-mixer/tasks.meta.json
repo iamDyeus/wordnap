@@ -1,0 +1,374 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Initialize project with pyproject.toml, create directory structure (src/sentence_mixer/ with all subpackages), and configure pytest + hypothesis": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160223320
+      },
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160237313
+      },
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160658942
+      }
+    ],
+    "1.2 Implement Pydantic schemas in src/sentence_mixer/models/schemas.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160224620
+      },
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160670913
+      },
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160845365
+      }
+    ],
+    "2.1 Implement Tokenizer in src/sentence_mixer/search/tokenizer.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160224826
+      },
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160854096
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787165786757
+      }
+    ],
+    "3.1 Implement Database class in src/sentence_mixer/database/database.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160224972
+      },
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160854831
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787165787517
+      }
+    ],
+    "3.2 Implement query helpers in src/sentence_mixer/database/queries.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160225142
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787165821947
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787166159654
+      }
+    ],
+    "4.1 Implement Scanner in src/sentence_mixer/ingestion/scanner.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160225307
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787165823194
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787166160428
+      }
+    ],
+    "4.2 Implement AudioExtractor in src/sentence_mixer/ingestion/audio.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160225476
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787166168516
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787167997453
+      }
+    ],
+    "4.3 Implement Transcriber in src/sentence_mixer/transcription/whisperx.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160225661
+      },
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787166170226
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787167997829
+      }
+    ],
+    "5. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160225756
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787168007582
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787169588892
+      }
+    ],
+    "6.1 Implement SearchEngine in src/sentence_mixer/search/candidate.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160225927
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787168008513
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787169589341
+      }
+    ],
+    "6.2 Implement Ranker in src/sentence_mixer/search/ranking.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160226078
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787169597242
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787172297199
+      }
+    ],
+    "7.1 Implement EDLGenerator in src/sentence_mixer/editing/edl.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160226268
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787169598077
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787172297916
+      }
+    ],
+    "8.1 Implement Renderer in src/sentence_mixer/editing/renderer.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160226527
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787172305836
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173204469
+      }
+    ],
+    "8.2 Implement clip boundary calculation in src/sentence_mixer/editing/boundaries.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160226671
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787172306839
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173203518
+      }
+    ],
+    "9.1 Implement CLI commands in src/sentence_mixer/cli.py": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160226804
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787172307679
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173205021
+      }
+    ],
+    "10.1 Wire indexing pipeline end-to-end": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160226941
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173212395
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173468905
+      }
+    ],
+    "10.2 Wire generation pipeline end-to-end": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160227141
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173213158
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173469635
+      }
+    ],
+    "11. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160227237
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173477033
+      },
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787263350890
+      }
+    ],
+    "1. Set up project structure and core schemas": [
+      {
+        "executionId": "ed5e395c-03f0-4c44-bea4-85f8ff73da2f",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787160845518
+      }
+    ],
+    "2. Implement tokenizer and normalization": [
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787165786854
+      }
+    ],
+    "3. Implement database layer": [
+      {
+        "executionId": "640c7d85-3396-4732-a0aa-f086e357bd96",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787166159705
+      }
+    ],
+    "4. Implement ingestion pipeline": [
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787167997926
+      }
+    ],
+    "6. Implement search and ranking": [
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787172297281
+      }
+    ],
+    "7. Implement EDL generation": [
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787172298101
+      }
+    ],
+    "8. Implement renderer": [
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173204549
+      }
+    ],
+    "9. Implement CLI interface": [
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173205064
+      }
+    ],
+    "10. Integration wiring and end-to-end validation": [
+      {
+        "executionId": "8a26e295-1eba-4160-9fa9-8e78b5c07358",
+        "chatSessionId": "sess_e38ec90f-7f50-41af-87a7-678913dd910b",
+        "timestamp": 1787173469791
+      }
+    ]
+  }
+}

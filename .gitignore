@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environment
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project data (large/generated files)
+data/sentence_mixer.db
+data/audio/*.wav
+data/cache/
+output/*.mp4
+output/manifests/*.json
+
+# Keep directory structure
+!data/audio/.gitkeep
+!data/cache/.gitkeep
+!output/.gitkeep
+!output/manifests/
+!library/.gitkeep
+
+# Library videos (user provides their own)
+library/*.mp4
+library/*.mkv
+library/*.avi
+library/*.mov
+library/*.webm
+
+# Test artifacts
+.pytest_cache/
+.hypothesis/
+htmlcov/
+.coverage
+*.cover
+
+# Hypothesis database
+.hypothesis/
+
+# Temp files
+*.tmp
+test_*.mp4
