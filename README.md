@@ -1,6 +1,6 @@
 # Wordnap
 
-> Kidnapping words from videos since 2024.
+> Kidnapping words from videos.
 
 ---
 
@@ -12,18 +12,6 @@ Feed it a library of video files. It listens to every word spoken, indexes them 
 
 It's a video editing engine that treats speech as a searchable database. Index once. Generate forever.
 
----
-
-## Demo
-
-```
-$ wordnap generate --sentence "We are holding your attention hostage" --round-robin
-
-Input:  "We are holding your attention hostage."
-Output: Trump says "We" → Obama says "are" → Bush says "holding" → Trump says "your"...
-```
-
-<!-- TODO: Add demo video/GIF -->
 
 ## How It Works
 
@@ -73,7 +61,7 @@ uv venv
 .venv\Scripts\activate        # Windows
 # source .venv/bin/activate   # Linux/Mac
 
-uv sync
+uv synchttps://github.com/iamDyeus/wordnap.git
 
 # Install WhisperX (requires PyTorch)
 uv pip install whisperx
