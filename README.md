@@ -10,6 +10,16 @@ Feed it a library of videos. It transcribes and indexes every spoken word with m
 
 It's a video editing engine that treats speech like a searchable database. Index once. Generate forever.
 
+## Demo
+https://github.com/user-attachments/assets/4d298f8c-412f-455b-a9b7-618d131ccecc
+
+```
+> python -m wordnap.cli generate --sentence "I have a ridiculous idea. I put hours into watching people talk. Hours and hours of them. Then I started wondering: What if I could find the words not by video but by word? So I built a machine. Now I can type what I want find the words cut them out and put them together. It works. The strange part? Nobody said this." --variations 1 --speed 0.65 --no-round-robin --subtitles --gap 100 --padding 0.08 --punctuation-pause
+
+Generated 1 variation(s):
+  output\i-have-a-ridiculous_180927_v000.mp4
+```
+
 
 
 ## How It Works
