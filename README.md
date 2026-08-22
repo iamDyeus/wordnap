@@ -1,14 +1,14 @@
-# Wordnap
+<img src="https://github.com/user-attachments/assets/931999eb-0010-4bb5-b4c2-fa5b40bc8f94" alt="Wordnap" width="100%" />
+<br />
+<p align="center">
+"Kidnapping words from videos."
+</p>
 
-> Kidnapping words from videos.
+**Wordnap** is a video editing engine that treats speech like a searchable database. Feed it a library of videos — it transcribes and indexes every spoken word with millisecond precision. Type any sentence, and it builds a new video from the footage: a different speaker for each word, burned-in subtitles, adjustable playback speed. Index once. Generate forever.
 
-You've probably seen it in movies; A shadowy figure sends a video spliced from news clips, with different faces delivering each word. Unsettling, precise, and painfully tedious to make by hand.
+> You've probably seen it in movies: a shadowy figure sends a video spliced from news clips, with a different face delivering each word. Unsettling, precise, and painfully tedious to make by hand. **Wordnap does it in seconds.**
 
-**Wordnap does it in seconds.**
-
-Feed it a library of videos. It transcribes and indexes every spoken word with millisecond precision. Type any sentence, and it builds a new video from the footage. Different speaker for each word, burned-in subtitles, and adjustable playback speed.
-
-It's a video editing engine that treats speech like a searchable database. Index once. Generate forever.
+---
 
 ## Demo
 https://github.com/user-attachments/assets/4d298f8c-412f-455b-a9b7-618d131ccecc
@@ -372,10 +372,8 @@ When a word has multiple candidates (e.g., "the" appears 200 times across all vi
 
 ## Origin Story
 
-The idea came from a movie scene — hackers stitching together a video message from clips of public figures, word by word, to deliver demands nobody actually said. That stuck with me for years. Not because of the plot, but because of the craft — the precision of cutting individual words and making them flow.
-
-Wordnap automates that craft. What would take an editor hours of scrubbing through footage, finding timestamps, and cutting frames — this does in seconds. It's a niche tool, but for that niche, nothing else exists.
+The idea came from a movie scene: hackers stitching together a video message from clips of public figures, word by word, to deliver demands nobody actually said. That stuck with me for years, not because of the plot, but because of the craft, the precision of cutting individual words and making them flow. Wordnap automates that craft. What would take an editor hours of scrubbing through footage, finding timestamps, and cutting frames, this does in seconds. It's a niche tool, but for that niche, nothing else exists.
 
 ## License
 
-MIT
+Wordnap is open source, released under the [MIT License](LICENSE) — use it, fork it, ship it.
