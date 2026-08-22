@@ -186,12 +186,50 @@ python -m wordnap.cli words [OPTIONS]
 
 ---
 
+### `verify` — Pre-flight script check
+
+```bash
+python -m wordnap.cli verify --sentence "..." [OPTIONS]
+```
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--sentence` | *(required)* | The sentence or script to verify |
+| `--db-path` | `data/wordnap.db` | Database file location |
+
+Checks if every word in your sentence exists in the indexed library **before** you commit to a full render. Reports missing words and coverage percentage.
+
+**Example:**
+
+```
+$ python -m wordnap.cli verify --sentence "I have a ridiculous idea"
+[OK] All 5 unique words found. Ready to generate!
+  Sentence: "I have a ridiculous idea"
+
+$ python -m wordnap.cli verify --sentence "I will yeet the cryptocurrency"
+[FAIL] 2/5 unique words missing:
+
+  x yeet
+  x cryptocurrency
+
+  3 words available
+
+  Coverage: 60%
+
+  Tip: Use --no-strict with 'generate' to skip missing words,
+  or rephrase your sentence using available vocabulary.
+```
+
+Exits with code `0` if all words are available, `1` if any are missing — usable in scripts/pipelines.
+
+---
+
 ## Architecture
 
 ```
 wordnap/
 ├── src/wordnap/
-│   ├── cli.py                  # Typer CLI — index, generate, words commands
+│   ├── cli.py                  # Typer CLI — index, generate, verify, words commands
 │   ├── ingestion/
 │   │   ├── scanner.py          # Recursive video discovery + ffprobe metadata
 │   │   ├── audio.py            # FFmpeg audio extraction (mono 16kHz WAV)

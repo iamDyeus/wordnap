@@ -566,5 +566,60 @@ def words(
     )
 
 
+@app.command()
+def verify(
+    sentence: str = typer.Option(..., "--sentence", help="Sentence or script to verify"),
+    db_path: Path = typer.Option("data/wordnap.db", help="Database path"),
+) -> None:
+    """Verify that all words in a sentence exist in the indexed library.
+
+    Pre-flight check before generation — reports which words are available
+    and which are missing so you can adjust your script.
+    """
+    db = Database(db_path)
+    db.initialize()
+
+    # Tokenize
+    tokenizer = Tokenizer()
+    token_infos = tokenizer.tokenize_with_context(sentence)
+    tokens = [t.normalized for t in token_infos]
+
+    if not tokens:
+        typer.echo("Error: Sentence contains no valid tokens.", err=True)
+        raise typer.Exit(code=1)
+
+    # Deduplicate for lookup (find_candidates_batch works on unique tokens)
+    unique_tokens = list(dict.fromkeys(tokens))
+
+    # Search
+    search_engine = SearchEngine(db)
+    available, missing = search_engine.find_candidates_batch(unique_tokens, strict=False)
+
+    db.close()
+
+    # Report
+    total = len(unique_tokens)
+    found_count = len(available)
+    missing_count = len(missing)
+
+    if not missing:
+        typer.echo(f"[OK] All {total} unique words found. Ready to generate!")
+        typer.echo(f"  Sentence: \"{sentence}\"")
+    else:
+        typer.echo(f"[FAIL] {missing_count}/{total} unique words missing:\n")
+        for word in missing:
+            typer.echo(f"  x {word}")
+        typer.echo("")
+
+        if available:
+            typer.echo(f"  {found_count} words available")
+
+        coverage = (found_count / total) * 100 if total > 0 else 0
+        typer.echo(f"\n  Coverage: {coverage:.0f}%")
+        typer.echo("\n  Tip: Use --no-strict with 'generate' to skip missing words,")
+        typer.echo("  or rephrase your sentence using available vocabulary.")
+        raise typer.Exit(code=1)
+
+
 if __name__ == "__main__":
     app()
